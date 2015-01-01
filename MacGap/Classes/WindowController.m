@@ -10,6 +10,11 @@
 #import "WebViewDelegate.h"
 #import "JSON.h"
 
+@interface WebInspector : NSObject { WebView *_webView; }
+- (id)initWithWebView:(WebView *)webView;
+- (void)showConsole:(id)sender;
+@end
+
 @interface WindowController ()
 
 @property (nonatomic, readwrite, strong) NSMutableDictionary* settings;
@@ -53,8 +58,8 @@
     [super windowDidLoad];
  
     [self.webView setMainFrameURL:[self.url absoluteString]];
-   
-    
+
+    [[WebInspector.alloc initWithWebView:self.webView] showConsole:self.webView];
 }
 
 - (id) initWithURL:(NSString *) relativeURL{
