@@ -36,4 +36,21 @@
 {
     return YES;
 }
+
+- (void)applicationWillTerminate:(NSNotification *)notification {
+    [Event triggerEvent:@"applicationWillTerminate" forWebView:self.windowController.webView];
+}
+
+- (void) applicationDidBecomeActive:(NSNotification *)notification {
+    [self.windowController showWindow:self];
+}
+
+- (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename {
+    NSDictionary* details = @{
+        @"filename": filename
+    };
+
+    [Event triggerEvent:@"openFile" withArgs:details forWebView:self.windowController.webView];
+    return YES;
+}
 @end
